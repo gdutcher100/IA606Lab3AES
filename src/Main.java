@@ -21,20 +21,42 @@ public class Main {
 
         SecretKey secretKey = Generator.generateKey(256);
         IvParameterSpec iv = Generator.generateIv();
+        String cipherText;
+        String decryptedPlaintext;
+        String propagatedCipher;
+        String propagatedPlaintext;
 
         switch (opmode){
             case "CBC":
                 AES256 aesCbc = new AES256CBC();
-                String cipherText = aesCbc.encryptAes256(plaintext, iv, secretKey);
-                String decryptedPlaintext = aesCbc.decryptAes256(cipherText, iv, secretKey);
+                cipherText = aesCbc.encryptAes256(plaintext, iv, secretKey);
+                decryptedPlaintext = aesCbc.decryptAes256(cipherText, iv, secretKey);
 
                 System.out.println("Ciphertext: " + cipherText);
                 System.out.println("Decrypted Plaintext: " + decryptedPlaintext);
                 System.out.println();
 
-                String propagatedCipher = aesCbc.stringErrorPropagation(cipherText);
+                propagatedCipher = aesCbc.stringErrorPropagation(cipherText);
                 propagatedCipher = StringUtil.hexToString(propagatedCipher);
-                String propagatedPlaintext = aesCbc.decryptAes256(propagatedCipher, iv, secretKey);
+                propagatedPlaintext = aesCbc.decryptAes256(propagatedCipher, iv, secretKey);
+
+                System.out.println();
+                System.out.println("Original Plaintext Hex: " + StringUtil.stringToHex(decryptedPlaintext));
+                System.out.println("Propagated Plaintext Hex: " + StringUtil.stringToHex(propagatedPlaintext));
+
+                break;
+            case "ECB":
+                AES256 aesEcb = new AES256ECB();
+                cipherText = aesEcb.encryptAes256(plaintext, iv, secretKey);
+                decryptedPlaintext = aesEcb.decryptAes256(cipherText, iv, secretKey);
+
+                System.out.println("Ciphertext: " + cipherText);
+                System.out.println("Decrypted Plaintext: " + decryptedPlaintext);
+                System.out.println();
+
+                propagatedCipher = aesEcb.stringErrorPropagation(cipherText);
+                propagatedCipher = StringUtil.hexToString(propagatedCipher);
+                propagatedPlaintext = aesEcb.decryptAes256(propagatedCipher, iv, secretKey);
 
                 System.out.println();
                 System.out.println("Original Plaintext Hex: " + StringUtil.stringToHex(decryptedPlaintext));

@@ -1,3 +1,4 @@
+import java.io.Console;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Random;
@@ -33,6 +34,7 @@ public class StringUtil {
 
     public static String replaceRandomCharInHexString(String s)
     {
+        System.out.println(s);
         Random r = new Random();
         char[] characters = s.toCharArray();
         int rand = (int)(Math.random() * s.length() - 2);
