@@ -11,13 +11,13 @@ public class AES256CBC implements AES256 {
     public String encryptAes256(String plaintext, IvParameterSpec iv, SecretKey key)
             throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException,
-                BadPaddingException, IllegalBlockSizeException {
+            BadPaddingException, IllegalBlockSizeException {
 
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, key, iv);
-            byte[] cipherText = cipher.doFinal(plaintext.getBytes());
-            return Base64.getEncoder()
-                    .encodeToString(cipherText);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+        byte[] cipherText = cipher.doFinal(plaintext.getBytes());
+        return Base64.getEncoder()
+                .encodeToString(cipherText);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class AES256CBC implements AES256 {
             InvalidAlgorithmParameterException, InvalidKeyException,
             BadPaddingException, IllegalBlockSizeException {
 
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
         cipher.init(Cipher.DECRYPT_MODE, key, iv);
         byte[] plainText = cipher.doFinal(Base64.getDecoder()
                 .decode(cipherText));
@@ -35,7 +35,7 @@ public class AES256CBC implements AES256 {
 
     @Override
     public String stringErrorPropagation(String ciphertext) throws UnsupportedEncodingException {
-        String hex = StringUtil.toHex(ciphertext);
+        String hex = StringUtil.stringToHex(ciphertext);
         return StringUtil.replaceRandomCharInHexString(hex);
     }
 }

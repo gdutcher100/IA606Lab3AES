@@ -3,7 +3,7 @@ import java.math.BigInteger;
 import java.util.Random;
 
 public class StringUtil {
-    public static String toHex(String arg) throws UnsupportedEncodingException {
+    public static String stringToHex(String arg) throws UnsupportedEncodingException {
         StringBuffer sb = new StringBuffer();
         //Converting string to character array
         char ch[] = arg.toCharArray();
@@ -15,7 +15,7 @@ public class StringUtil {
         return sb.toString();
     }
 
-    public static String stringToHex(String arg) {
+    public static String hexToString(String arg) {
         String result = new String();
         char[] charArray = arg.toCharArray();
         for(int i = 0; i < charArray.length; i=i+2) {
@@ -25,6 +25,10 @@ public class StringUtil {
         }
 
         return result;
+    }
+
+    public static String charToHex(char arg) {
+        return Integer.toHexString((int) arg);
     }
 
     public static String replaceRandomCharInHexString(String s)
@@ -37,8 +41,7 @@ public class StringUtil {
             offset = 1;
         }
 
-        int myRandomNumber = r.nextInt(0x10) + 0x10; // Generates a random number between 0x10 and 0x20
-        String randomHex = Integer.toHexString(myRandomNumber);
+        String randomHex = charToHex((char)(r.nextInt(26) + 'a'));
 
         char selectedChar1 = characters[rand + offset];
         char selectedChar2 = characters[rand + offset + 1];
