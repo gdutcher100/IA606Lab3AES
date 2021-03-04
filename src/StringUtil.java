@@ -34,7 +34,7 @@ public class StringUtil {
 
     public static String replaceRandomCharInHexString(String s)
     {
-        System.out.println(s);
+        System.out.println("Ciphertext Hex: " + s);
         Random r = new Random();
         char[] characters = s.toCharArray();
         int rand = (int)(Math.random() * s.length() - 2);
@@ -51,6 +51,7 @@ public class StringUtil {
         characters[rand + offset + 1] = randomHex.toCharArray()[1];
 
         System.out.println("Modifying random byte: " + selectedChar1 + selectedChar2 + "->" + randomHex);
+        System.out.println("Propogated Ciphertext: " + new String(characters));
 
         return new String(characters);
     }
